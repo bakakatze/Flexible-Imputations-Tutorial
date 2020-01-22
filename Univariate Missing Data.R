@@ -7,6 +7,8 @@ require(MASS)
 require(ImputeRobust)
 require(gamlss)
 
+# Source: https://stefvanbuuren.name/fimd
+
 #
 # We will look at "whiteside" dataset from MASS
 # It recorded weekly gas consumption (in cubic feet) and average external temperature (in Centigrade).
@@ -104,7 +106,71 @@ hist(syn$hc, breaks = 50) # rounder distribution for the drawn imputations from 
 
 # number of donors are usually set at 5.
 
-# 3.5 Classification and Regression Trees ====
+# 3.5 Classification and Regression Trees (CART) ====
+
+# CART methods are robush against outliers, can deal with multicolinearity and skewed distributions, and
+# are flexible to fit interactions and non-linear interactions
+
+# The method is similar to the predictive mean matching, but the "mean" is calculated by the tree model instead.
+# The uncertainty parameter is gained through bootstraping.
+
+# 3.6 Categorical Data ====
+
+# There are different methods that can be use to impute categorical data
+
+## 3.6.1 Generalised Linear Model ----
+
+# in mice package, this comes under method = "logreg"
+
+## 3.6.2 Perfect Prediction ----
+
+# Many options but the recommendation is to use:
+# 1. Data Augmentation
+# 2. Bayesian sampling with weak Cauchy distribution
+
+## 3.6.3 Limitation of GLM ----
+
+# The model breaks if missing data > 40%
+# Less robust combared to pmm (predictive mean matching), cart (classification and regression trees), or rf (random forest)
+
+# 3.7 Other Data Types ====
+
+## Methods available from mice package for Count data:
+# 1. gamlssPO (Poisson)
+# 2. gamlssZIBI (zero-inflated binomial)
+# 3. gamlssZIP (zero-inflated Poisson)
+
+
+# Literatures are still evolving around censored, truncated, and rounded data. Read more if interested.
+
+# 3.8 Non Ignorable Missing Data ====
+
+# Options:
+# 1. Selection Model
+
+# 2. Selection and pattern-mixture models
+# This combines the distribution of the missing data and the observed data to get a selection sample distribution to draw from.
+
+# 3. Adding/Multiplying a constant
+# Do regular imputation and add/substract a constant that reflects the nature of the missing data based on prior knowledge
+
+## 3.8.6 Sensitivity Analysis ----
+
+# It is important to conduct sensitivity analysis after you have done your imputation.
+# However, before doing the sensitvity analysis, there should be a reasonable evidence that the MAR assumption is inadequate.
+# The scenarios for sensitivity analysis can be gained from the subject matter experts.
+
+# In practice, we may lack such insights necessary to construct the scenario for sensitivity analysis.
+# It's better to construct a good imputation model (based on all available data) over a poorly constructed sensitivity analysis.
+
+
+
+
+
+
+
+
+
 
 
 
